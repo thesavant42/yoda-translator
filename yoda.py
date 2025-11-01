@@ -8,4 +8,6 @@ def translate(text):
     doc = nlp(text)
     return translate_sents(doc.sents)
 
-print(translate("I sense much anger in him."))
+if __name__ == "__main__":
+    # Example usage - only runs when script is executed directly
+    print(translate("I sense much anger in him."))

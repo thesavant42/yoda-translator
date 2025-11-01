@@ -65,18 +65,19 @@ def rule_dt_vbz(words):
     return move_tag_seq(words, ['DT', 'VBZ'], 'end')
 
 
-def rule_nnp_vbz_rb_vb(words):
+def rule_nn_vbz_rb_vb(words):
     """ Size does not matter. -> Size matters not. 
-    Conversion of VB to VBZ is blunt at best (adding 's'). """
+    Conversion of VB to VBZ is blunt at best (adding 's'). 
+    Fixed: Changed from NNP to NN to match SpaCy's actual tagging of 'Size' as common noun. """
     original_len = len(words)
     words = replace_tag_seq(
         words,
-        ['NNP','VBZ','RB','VB'],
-        ['NNP','VB','RB']
+        ['NN','VBZ','RB','VB'],
+        ['NN','VB','RB']
     )
     if words is not None:
         if len(words) < original_len:
-            i = index_tag_seq(words, ['NNP', 'VB', 'RB'])
+            i = index_tag_seq(words, ['NN', 'VB', 'RB'])
             words[i+1].text += 's'
             words[i+1].tag = 'VBZ'
     return words
@@ -91,6 +92,6 @@ def apply_yodish_grammar(clause):
         rule_rb_jjr,
         rule_vb_prp_nn,
         rule_dt_vbz,
-        rule_nnp_vbz_rb_vb,
+        rule_nn_vbz_rb_vb,
     ]
     return functools.reduce(apply_rule, rules, clause)

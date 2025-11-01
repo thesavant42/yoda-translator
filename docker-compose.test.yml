@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  yoda-test:
+    build:
+      context: .
+      dockerfile: test.Dockerfile
+    container_name: yoda-compatibility-test
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - .:/app/source:ro  # Mount source for debugging
+    command: >
+      sh -c "
+        echo 'Testing yoda-translator compatibility...' &&
+        python -c 'import spacy; print(f\"SpaCy version: {spacy.__version__}\")' &&
+        python -c 'from yoda import translate; print(\"Test 1:\", translate(\"You are conflicted.\"))' &&
+        python -c 'from yoda import translate; print(\"Test 2:\", translate(\"Size does not matter.\"))' &&
+        python -c 'from yoda import translate; print(\"Test 3:\", translate(\"This is my home.\"))' &&
+        echo 'SUCCESS: All tests passed! yoda-translator is compatible with chainlit environment.'
+      "

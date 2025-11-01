@@ -1,13 +1,18 @@
 [tool.poetry]
 name = "yoda-translator"
-version = "0.1.0"
-description = ""
+version = "0.2.0"
+description = "Python library for translating English text to Yoda-speak using SpaCy NLP"
 authors = ["Haohang Xu <haohang.xu@gmail.com>"]
+readme = "README.md"
+packages = [{include = "*.py"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
 spacy = "^3.0.6"
 en-core-web-sm = {url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.0.0/en_core_web_sm-3.0.0.tar.gz"}
+
+[tool.poetry.scripts]
+yoda-translate = "yoda_cli:main"
 
 [tool.poetry.dev-dependencies]
 
